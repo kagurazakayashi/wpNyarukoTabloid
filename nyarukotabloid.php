@@ -18,10 +18,10 @@ define("NYARUKOTABLOID_TEXT_DOMAIN", "nyarukotabloid");
 define("NYARUKOTABLOID_ITEMC", "wpNyarukoTabloidItem");
 define("NYARUKOTABLOID_RANDOM_CHAR", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 function nyarukoTabloidShortcode($attr, $content) {
-    $html = "<script>var wpNyarukoNotFormat = true;</script>";
+    $html = '<script>var wpNyarukoNotFormat = true;</script><link href="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.css" rel="stylesheet">';
     $lines = explode("\n", $content);
-    //$imgpreg = "/<img (.*?) src=\"(.+?)\".*? >/";
-    $imgpreg = "/!\[.*\]\((.+)\)/";
+    $imgpreg = "/<img [^>]*src=\"(.+?)\"/";
+    // $imgpreg = "/!\[.*\]\((.+)\)/";
     $nowimg = "";
     $nowtxt = "";
     $total = count($lines);
@@ -45,7 +45,7 @@ function nyarukoTabloidShortcode($attr, $content) {
             } else {
                 $nowtxt = $text;
             }
-            if ($nowimg != "" && $nowtxt != "") {
+            if ($nowimg != "" && strlen($nowtxt) > 1) {
                 array_push($items,array($nowimg,$nowtxt));
                 $nowimg = "";
                 $nowtxt = "";
@@ -56,26 +56,34 @@ function nyarukoTabloidShortcode($attr, $content) {
     $html .= '<div class="wpNyarukoTabloid" id="wpNyarukoTabloid'.time().rand(10000,60000).'">';
     for($j = 1; $j < $total; $j++){
         $nowitem = $items[$j];
-        $nowimg = $nowitem[0];
-        $nowtxt = $nowitem[1];
-        $html .= gTxtImgHtml($j,$total-1,$nowimg,$nowtxt);
+        $nowimg2 = $nowitem[0];
+        $nowtxt2 = $nowitem[1];
+        $html .= gTxtImgHtml($j,$total-1,$nowimg2,$nowtxt2);
     }
     $html .= '</div>';
     echo $html;
 }
 function gTxtImgHtml($i,$total,$nowimg,$nowtxt) {
+    $imgnav = "";
+    if ($i > 1) {
+        $imgnav .= '<div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleLeft" id="wpNyarukoTabloidTriangleLeft'.$i.'"></div>';
+    }
+    if ($i < $total) {
+        $imgnav .= '<div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleRight" id="wpNyarukoTabloidTriangleRight'.$i.'"></div>';
+    }
     $html = [
-    '<div class="'.NYARUKOTABLOID_ITEMC.'" id="'.NYARUKOTABLOID_ITEMC.$i.'">',
+    '<div class="'.NYARUKOTABLOID_ITEMC.'" id="'.NYARUKOTABLOID_ITEMC.'-'.$i.'" style="left:calc(100% * '.($i-1).');">',
         '<div class="'.NYARUKOTABLOID_ITEMC.'ImgBox" id="'.NYARUKOTABLOID_ITEMC.'ImgBox'.$i.'">',
             '<img class="'.NYARUKOTABLOID_ITEMC.'Img" id="'.NYARUKOTABLOID_ITEMC.'Img'.$i.'" src="'.$nowimg.'" alt="'.$nowtxt.'" />',
+            $imgnav,
         '</div>',
         '<div class="'.NYARUKOTABLOID_ITEMC.'TxtBox" id="'.NYARUKOTABLOID_ITEMC.'TxtBox'.$i.'">',
             '<span class="'.NYARUKOTABLOID_ITEMC.'NumBox" id="'.NYARUKOTABLOID_ITEMC.'NumBox'.$i.'">',
-                '<span class="'.NYARUKOTABLOID_ITEMC.'NumI" id="'.NYARUKOTABLOID_ITEMC.'NumI'.$i.'">'.$i.'</span>',
-                '<span class="'.NYARUKOTABLOID_ITEMC.'NumO" id="'.NYARUKOTABLOID_ITEMC.'NumO'.$i.'">/</span>',
-                '<span class="'.NYARUKOTABLOID_ITEMC.'NumT" id="'.NYARUKOTABLOID_ITEMC.'NumT'.$i.'">'.$total.'</span>',
+                '<span class="'.NYARUKOTABLOID_ITEMC.'NumS '.NYARUKOTABLOID_ITEMC.'NumI" id="'.NYARUKOTABLOID_ITEMC.'NumI'.$i.'">'.$i.'</span>',
+                '<span class="'.NYARUKOTABLOID_ITEMC.'NumS '.NYARUKOTABLOID_ITEMC.'NumO" id="'.NYARUKOTABLOID_ITEMC.'NumO'.$i.'"> / </span>',
+                '<span class="'.NYARUKOTABLOID_ITEMC.'NumS '.NYARUKOTABLOID_ITEMC.'NumT" id="'.NYARUKOTABLOID_ITEMC.'NumT'.$i.'">'.$total.'</span>',
             '</span>',
-            '<span class="'.NYARUKOTABLOID_ITEMC.'NumTxt" id="'.NYARUKOTABLOID_ITEMC.'NumTxt'.$i.'">'.$nowtxt.'</span>',
+            '<span class="'.NYARUKOTABLOID_ITEMC.'Txt" id="'.NYARUKOTABLOID_ITEMC.'Txt'.$i.'">&emsp;&emsp;'.$nowtxt.'</span>',
         '</div>',
     '</div>'
     ];

@@ -1,0 +1,84 @@
+body {
+    overflow: hidden !important;
+}
+.wpNyarukoTabloid {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px);
+    z-index: 16;
+    overflow: scroll;
+    background-color: #000;
+    color: #FFF;
+}
+.wpNyarukoTabloidItem {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.wpNyarukoTabloidItem img {
+    width: 100%;
+    height: auto;
+}
+.wpNyarukoTabloidItemNumBox {
+    position: absolute;
+    font-size: 20pt;
+    width: 100px;
+    height: 100px;
+    padding-left: 10px;
+    color: #FF0;
+}
+.wpNyarukoTabloidItemNumS {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+.wpNyarukoTabloidItemNumI {
+    top: 0px;
+}
+.wpNyarukoTabloidItemNumO {
+    top: 15px;
+}
+.wpNyarukoTabloidItemNumT {
+    top: 30px;
+}
+.wpNyarukoTabloidItemTxt {
+    position: absolute;
+    padding-left: 70px;
+    padding-right: 10px;
+}
+.wpNyarukoTabloidItemImgBox {
+    position: relative;
+}
+.wpNyarukoTabloidTriangle {
+    position: absolute;
+    display: block;
+    top: 50%;
+    top: calc(50% - 16px);
+    cursor: pointer;
+    border-right: 12px solid;
+    border-bottom: 12px solid;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+.wpNyarukoTabloidTriangle:hover {
+    border-color: #FFF;
+}
+.wpNyarukoTabloidTriangleRight {
+    right: 20px;
+    transform: rotate(-45deg);
+}
+.wpNyarukoTabloidTriangleLeft {
+    left: 20px;
+    transform: rotate(135deg);
+}
+.wpNyarukoTabloidItemTxtBox {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
