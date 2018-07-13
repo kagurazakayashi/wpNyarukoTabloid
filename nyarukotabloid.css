@@ -8,7 +8,8 @@ body {
     width: 100%;
     height: calc(100% - 60px);
     z-index: 16;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
     background-color: #000;
     color: #FFF;
 }
@@ -26,7 +27,8 @@ body {
     font-size: 20pt;
     width: 100px;
     height: 100px;
-    padding-left: 10px;
+    padding-left: 20px;
+    padding-top: 20px;
     color: #FF0;
 }
 .wpNyarukoTabloidItemNumS {
@@ -45,14 +47,18 @@ body {
 }
 .wpNyarukoTabloidItemTxt {
     position: absolute;
-    padding-left: 70px;
-    padding-right: 10px;
+    padding-left: 90px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    min-height: 60px;
 }
 .wpNyarukoTabloidItemImgBox {
     position: relative;
 }
 .wpNyarukoTabloidTriangle {
-    position: absolute;
+    /* position: absolute; */
+    position: fixed;
     display: block;
     top: 50%;
     top: calc(50% - 16px);
@@ -63,6 +69,7 @@ body {
     height: 32px;
     background-color: transparent;
     border-color: rgba(255, 255, 255, 0.5);
+    z-index: 16;
 }
 .wpNyarukoTabloidTriangle:hover {
     border-color: #FFF;
@@ -81,4 +88,12 @@ body {
     width: 100%;
     height: auto;
     background-color: rgba(0, 0, 0, 0.5);
+}
+@media screen and (max-width: 480px) {
+    .wpNyarukoTabloidItemTxtBox {
+        position: initial;
+    }
+    .wpNyarukoTabloid {
+        overflow-y: scroll;
+    }
 }
