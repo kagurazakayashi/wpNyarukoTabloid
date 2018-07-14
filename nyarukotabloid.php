@@ -53,14 +53,14 @@ function nyarukoTabloidShortcode($attr, $content) {
         }
     }
     $total = count($items);
-    $html .= '<div class="wpNyarukoTabloid" id="wpNyarukoTabloid'.time().rand(10000,60000).'" onKeyUp="return wpNyarukoTabloidKey(event)">';
+    $html .= '<div class="wpNyarukoTabloid" id="wpNyarukoTabloid'.time().rand(10000,60000).'" onKeyUp="return wpNyarukoTabloidKey(event)"><div class="wpNyarukoTabloidPaper" id="wpNyarukoTabloidPaper" style="width:'.(($total-1) * 100).'%;">';
     for($j = 1; $j < $total; $j++){
         $nowitem = $items[$j];
         $nowimg2 = $nowitem[0];
         $nowtxt2 = $nowitem[1];
         $html .= gTxtImgHtml($j,$total-1,$nowimg2,$nowtxt2);
     }
-    $html .= '</div><div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleLeft" onclick="wpNyarukoTabloidTriangleClick(false);"></div><div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleRight" onclick="wpNyarukoTabloidTriangleClick(true);"></div><script>var wpNyarukoTabloidTotal = '.$total.';</script><script type="text/javascript" src="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.js" charset="UTF-8"></script>';
+    $html .= '</div></div><div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleLeft" onclick="wpNyarukoTabloidTriangleClick(false);"></div><div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleRight" onclick="wpNyarukoTabloidTriangleClick(true);"></div><script>var wpNyarukoTabloidTotal = '.$total.';</script><script type="text/javascript" src="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.js" charset="UTF-8"></script>';
     echo $html;
 }
 function gTxtImgHtml($i,$total,$nowimg,$nowtxt) {
@@ -71,8 +71,9 @@ function gTxtImgHtml($i,$total,$nowimg,$nowtxt) {
     // if ($i < $total) {
     //     $imgnav .= '<div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleRight" id="wpNyarukoTabloidTriangleRight'.$i.'" onclick="wpNyarukoTabloidTriangleClick('.$i.','.$i.')"></div>';
     // }
+    $itemwidth = 100 / $total;
     $html = [
-    '<div class="'.NYARUKOTABLOID_ITEMC.'" id="'.NYARUKOTABLOID_ITEMC.'-'.$i.'" style="left:calc(100% * '.($i-1).');">',
+    '<div class="'.NYARUKOTABLOID_ITEMC.'" id="'.NYARUKOTABLOID_ITEMC.'-'.$i.'" style="left:calc('.$itemwidth.'% * '.($i-1).');width:'.$itemwidth.'%">',
         '<div class="'.NYARUKOTABLOID_ITEMC.'ImgBox" id="'.NYARUKOTABLOID_ITEMC.'ImgBox'.$i.'">',
             '<img class="'.NYARUKOTABLOID_ITEMC.'Img" id="'.NYARUKOTABLOID_ITEMC.'Img'.$i.'" src="'.$nowimg.'" alt="'.$nowtxt.'" />',
             $imgnav,
