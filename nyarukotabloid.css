@@ -11,10 +11,11 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
     color: #FFF;
+    background-color: #000;
+    user-select: none;
 }
 .wpNyarukoTabloidPaper {
     position: relative;
-    background-color: #000;
     height: 100%;
     width: 100%;
 }
@@ -26,6 +27,7 @@ body {
 .wpNyarukoTabloidItem img {
     width: 100%;
     height: auto;
+    pointer-events: none;
 }
 .wpNyarukoTabloidItemNumBox {
     position: absolute;
@@ -73,11 +75,14 @@ body {
     width: 32px;
     height: 32px;
     background-color: transparent;
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
     z-index: 16;
 }
 .wpNyarukoTabloidTriangle:hover {
     border-color: #FFF;
+}
+.wpNyarukoTabloidTriangle:active {
+    border-color: rgba(255, 255, 255, 0.3);
 }
 .wpNyarukoTabloidTriangleRight {
     right: 20px;

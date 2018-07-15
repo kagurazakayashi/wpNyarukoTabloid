@@ -3,11 +3,14 @@ var wpNyarukoTabloidTriangleLeft = document.getElementsByClassName("wpNyarukoTab
 var wpNyarukoTabloidTriangleRight = document.getElementsByClassName("wpNyarukoTabloidTriangleRight")[0];
 var wpNyarukoTabloidPaper = $("#wpNyarukoTabloidPaper");
 var wpNyarukoTabloid = $(".wpNyarukoTabloid")[0];
+var wpNyarukoTouch;
+
 for (let i = 1; i < wpNyarukoTabloidTotal; i++) {
     const nowNyarukoTabloidItemTxtBox = document.getElementById("wpNyarukoTabloidItemTxtBox"+i);
     const nowNyarukoTabloidItemTxt = document.getElementById("wpNyarukoTabloidItemTxt"+i);
     nowNyarukoTabloidItemTxtBox.style.height = (nowNyarukoTabloidItemTxt.offsetHeight) + "px";
 }
+
 function wpNyarukoTabloidTriangleClick(isnext) {
     // document.getElementsByClassName("wpNyarukoTabloid")[0].scrollLeft = document.body.clientWidth * gotopage;
     var newwpNyarukoTabloidNowpage = 0
@@ -27,6 +30,7 @@ function wpNyarukoTabloidTriangleClick(isnext) {
     }
     wpNyarukoTabloidAutoHide();
 }
+
 document.onkeydown = function wpNyarukoTabloidKey(event) {
     if (event.keyCode == 37 || event.keyCode == 38) {
         wpNyarukoTabloidTriangleClick(false);
@@ -34,6 +38,7 @@ document.onkeydown = function wpNyarukoTabloidKey(event) {
         wpNyarukoTabloidTriangleClick(true);
     }
 }
+
 function wpNyarukoTabloidAutoHide() {
     var newriangledisplay = ["block","block"];
     if (wpNyarukoTabloidNowpage <= 0) {
@@ -46,3 +51,24 @@ function wpNyarukoTabloidAutoHide() {
     wpNyarukoTabloidTriangleRight.style.display = newriangledisplay[1];
 }
 wpNyarukoTabloidAutoHide();
+
+wpNyarukoTabloid.addEventListener("touchstart",function(e){
+    wpNyarukoTouch = e.touches[0];
+},false);
+wpNyarukoTabloid.addEventListener("touchmove",function(e){
+    if (wpNyarukoTouch != 65536) {
+        var touch = e.touches[0];
+        var touchx = touch.pageX;
+        var touchox = wpNyarukoTouch.pageX;
+        if (touchox > touchx && (touchox - touchx) > 100) {
+            wpNyarukoTabloidTriangleClick(true);
+            wpNyarukoTouch = 65536;
+        } else if (touchx > touchox && (touchx - touchox) > 100) {
+            wpNyarukoTabloidTriangleClick(false);
+            wpNyarukoTouch = 65536;
+        }
+    }
+},false);
+wpNyarukoTabloid.addEventListener("touchend",function(e){
+    wpNyarukoTouch = 0;
+},false);
