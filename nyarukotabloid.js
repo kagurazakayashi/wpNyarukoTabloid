@@ -1,6 +1,4 @@
 var wpNyarukoTabloidNowpage = 0;
-var wpNyarukoTabloidTriangleLeft = document.getElementsByClassName("wpNyarukoTabloidTriangleLeft")[0];
-var wpNyarukoTabloidTriangleRight = document.getElementsByClassName("wpNyarukoTabloidTriangleRight")[0];
 var wpNyarukoTabloidPaper = $("#wpNyarukoTabloidPaper");
 var wpNyarukoTabloid = $(".wpNyarukoTabloid")[0];
 var wpNyarukoTouch;
@@ -40,15 +38,17 @@ document.onkeydown = function wpNyarukoTabloidKey(event) {
 }
 
 function wpNyarukoTabloidAutoHide() {
-    var newriangledisplay = ["block","block"];
-    if (wpNyarukoTabloidNowpage <= 0) {
-        newriangledisplay[0] = "none";
+    if (wpNyarukoTriangleMode == false) {
+        var newriangledisplay = ["block","block"];
+        if (wpNyarukoTabloidNowpage <= 0) {
+            newriangledisplay[0] = "none";
+        }
+        if (wpNyarukoTabloidNowpage >= wpNyarukoTabloidTotal-2) {
+            newriangledisplay[1] = "none";
+        }
+        document.getElementsByClassName("wpNyarukoTabloidTriangleBoxLeft")[0].style.display = newriangledisplay[0];
+        document.getElementsByClassName("wpNyarukoTabloidTriangleBoxRight")[0].style.display = newriangledisplay[1];
     }
-    if (wpNyarukoTabloidNowpage >= wpNyarukoTabloidTotal-2) {
-        newriangledisplay[1] = "none";
-    }
-    wpNyarukoTabloidTriangleLeft.style.display = newriangledisplay[0];
-    wpNyarukoTabloidTriangleRight.style.display = newriangledisplay[1];
 }
 wpNyarukoTabloidAutoHide();
 
@@ -72,3 +72,17 @@ wpNyarukoTabloid.addEventListener("touchmove",function(e){
 wpNyarukoTabloid.addEventListener("touchend",function(e){
     wpNyarukoTouch = 0;
 },false);
+
+function wpNyarukoTabloidTriangleStyle(isr,tid,issty) {
+    var lr = isr ? "R" : "L";
+    var nc = "_" + lr + "_" + tid;
+    var nbox = $("#wpNyarukoTabloidTriangleBox"+nc);
+    var nt = $("#wpNyarukoTabloidTriangle"+nc);
+    if (issty) {
+        nt.css("border-color","#FFF");
+        nbox.css("background-color","rgba(0, 0, 0, 0.5)");
+    } else {
+        nt.css("border-color","rgba(255, 255, 255, 0.3)");
+        nbox.css("background-color","transparent");
+    }
+}

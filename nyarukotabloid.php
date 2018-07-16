@@ -17,6 +17,7 @@ define("NYARUKOTABLOID_FULL_DIR", plugin_dir_path( __FILE__ ));
 define("NYARUKOTABLOID_TEXT_DOMAIN", "nyarukotabloid");
 define("NYARUKOTABLOID_ITEMC", "wpNyarukoTabloidItem");
 define("NYARUKOTABLOID_RANDOM_CHAR", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+define("NYARUKOTABLOID_TRIANGLE_MODE", 0); //0外置网页两侧 1嵌入图片两侧
 function nyarukoTabloidShortcode($attr, $content) {
     $html = '<script>var wpNyarukoNotFormat = true;</script><link href="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.css" rel="stylesheet">';
     $lines = explode("\n", $content);
@@ -53,14 +54,25 @@ function nyarukoTabloidShortcode($attr, $content) {
         }
     }
     $total = count($items);
-    $html .= '<div class="wpNyarukoTabloid" id="wpNyarukoTabloid'.time().rand(10000,60000).'" onKeyUp="return wpNyarukoTabloidKey(event)"><div class="wpNyarukoTabloidPaper" id="wpNyarukoTabloidPaper" style="width:'.(($total-1) * 100).'%;">';
+    $html .= '<div class="wpNyarukoTabloid" id="wpNyarukoTabloid'.time().rand(10000,60000).'" onKeyUp="return wpNyarukoTabloidKey(event)">';
+    if (NYARUKOTABLOID_TRIANGLE_MODE == 0) {
+        $html .= '
+        <div class="wpNyarukoTabloidTriangleBox wpNyarukoTabloidTriangleBoxLeft" id="wpNyarukoTabloidTriangleBox_L_0" onclick="wpNyarukoTabloidTriangleStyle(false,0,false);wpNyarukoTabloidTriangleClick(false);" onmouseover="wpNyarukoTabloidTriangleStyle(false,0,true);" onmouseout="wpNyarukoTabloidTriangleStyle(false,0,false);">
+            <div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleLeft" id="wpNyarukoTabloidTriangle_L_0"></div>
+        </div>
+        <div class="wpNyarukoTabloidTriangleBox wpNyarukoTabloidTriangleBoxRight" id="wpNyarukoTabloidTriangleBox_R_0" id="" onclick="wpNyarukoTabloidTriangleStyle(true,0,false);wpNyarukoTabloidTriangleClick(true);" onmouseover="wpNyarukoTabloidTriangleStyle(true,0,true);" onmouseout="wpNyarukoTabloidTriangleStyle(true,0,false);">
+            <div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleRight" id="wpNyarukoTabloidTriangle_R_0"></div>
+        </div>';
+    }
+    $html .= '<div class="wpNyarukoTabloidPaper" id="wpNyarukoTabloidPaper" style="width:'.(($total-1) * 100).'%;">';
     for($j = 1; $j < $total; $j++){
         $nowitem = $items[$j];
         $nowimg2 = $nowitem[0];
         $nowtxt2 = $nowitem[1];
         $html .= gTxtImgHtml($j,$total-1,$nowimg2,$nowtxt2);
     }
-    $html .= '</div></div><div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleLeft" onclick="wpNyarukoTabloidTriangleClick(false);"></div><div class="wpNyarukoTabloidTriangle wpNyarukoTabloidTriangleRight" onclick="wpNyarukoTabloidTriangleClick(true);"></div><script>var wpNyarukoTabloidTotal = '.$total.';</script><script type="text/javascript" src="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.js" charset="UTF-8"></script>';
+    $html .= '</div></div><script type="text/javascript">var wpNyarukoTabloidTotal = '.$total.';var wpNyarukoTriangleMode = '.NYARUKOTABLOID_TRIANGLE_MODE.';</script>
+    <script type="text/javascript" src="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.js" charset="UTF-8"></script>';
     echo $html;
 }
 function gTxtImgHtml($i,$total,$nowimg,$nowtxt) {

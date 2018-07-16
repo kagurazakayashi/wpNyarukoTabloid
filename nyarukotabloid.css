@@ -63,34 +63,48 @@ body {
 .wpNyarukoTabloidItemImgBox {
     position: relative;
 }
+.wpNyarukoTabloidTriangleBox {
+    /* position: absolute; */
+    position: fixed;
+    width: 64px;
+    height: 100%;
+    z-index: 16;
+    background-color: transparent;
+}
+/* .wpNyarukoTabloidTriangleBox:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+} */
+.wpNyarukoTabloidTriangleBoxLeft {
+    left: 0;
+    cursor: w-resize;
+}
+.wpNyarukoTabloidTriangleBoxRight {
+    right: 0;
+    cursor: e-resize;
+}
 .wpNyarukoTabloidTriangle {
     /* position: absolute; */
     position: fixed;
     display: block;
     top: 50%;
     top: calc(50% - 16px);
-    cursor: pointer;
     border-right: 12px solid;
     border-bottom: 12px solid;
     width: 32px;
     height: 32px;
     background-color: transparent;
     border-color: rgba(255, 255, 255, 0.3);
-    z-index: 16;
-}
-.wpNyarukoTabloidTriangle:hover {
-    border-color: #FFF;
-}
-.wpNyarukoTabloidTriangle:active {
-    border-color: rgba(255, 255, 255, 0.3);
+    z-index: 17;
 }
 .wpNyarukoTabloidTriangleRight {
     right: 20px;
     transform: rotate(-45deg);
+    cursor: e-resize;
 }
 .wpNyarukoTabloidTriangleLeft {
     left: 20px;
     transform: rotate(135deg);
+    cursor: w-resize;
 }
 .wpNyarukoTabloidItemTxtBox {
     position: absolute;
