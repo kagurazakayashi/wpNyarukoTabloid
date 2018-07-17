@@ -9,9 +9,9 @@ for (let i = 1; i < wpNyarukoTabloidTotal; i++) {
     nowNyarukoTabloidItemTxtBox.style.height = (nowNyarukoTabloidItemTxt.offsetHeight) + "px";
 }
 
-function wpNyarukoTabloidTriangleClick(isnext) {
+function wpNyarukoTabloidTriangleClick(isnext,isanimate=true) {
     // document.getElementsByClassName("wpNyarukoTabloid")[0].scrollLeft = document.body.clientWidth * gotopage;
-    var newwpNyarukoTabloidNowpage = 0
+    var newwpNyarukoTabloidNowpage = 0;
     if (isnext) {
         newwpNyarukoTabloidNowpage = wpNyarukoTabloidNowpage + 1;
     } else {
@@ -20,13 +20,21 @@ function wpNyarukoTabloidTriangleClick(isnext) {
     if (newwpNyarukoTabloidNowpage >= 0 && newwpNyarukoTabloidNowpage < wpNyarukoTabloidTotal-1) {
         wpNyarukoTabloidNowpage = newwpNyarukoTabloidNowpage;
         var gotowidth = (document.body.clientWidth * wpNyarukoTabloidNowpage * -1)+"px";
-        // wpNyarukoTabloidPaper.css({"left":gotowidth});
         wpNyarukoTabloidPaper.stop();
-        wpNyarukoTabloidPaper.animate({
-            "left":gotowidth
-        },300);
+        if (isanimate) {
+            wpNyarukoTabloidPaper.animate({
+                "left":gotowidth
+            },300);
+        } else {
+            wpNyarukoTabloidPaper.css("left",gotowidth);
+        }
     }
     wpNyarukoTabloidAutoHide();
+}
+
+function wpNyarukoTabloidGoToPage(page,isanimate=true) {
+    wpNyarukoTabloidNowpage = page;
+    wpNyarukoTabloidTriangleClick(false,isanimate);
 }
 
 document.onkeydown = function wpNyarukoTabloidKey(event) {
@@ -86,3 +94,8 @@ function wpNyarukoTabloidTriangleStyle(isr,tid,issty) {
         nbox.css("background-color","transparent");
     }
 }
+
+$(window).resize(function(){
+    wpNyarukoTabloidNowpage++;
+    wpNyarukoTabloidGoToPage(wpNyarukoTabloidNowpage,false);
+});
