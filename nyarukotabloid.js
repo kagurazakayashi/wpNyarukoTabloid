@@ -28,6 +28,7 @@ function wpNyarukoTabloidTriangleClick(isnext,isanimate=true) {
         } else {
             wpNyarukoTabloidPaper.css("left",gotowidth);
         }
+        window.location.hash = wpNyarukoTabloidNowpage + 1;
     }
     wpNyarukoTabloidAutoHide();
 }
@@ -58,7 +59,6 @@ function wpNyarukoTabloidAutoHide() {
         document.getElementsByClassName("wpNyarukoTabloidTriangleBoxRight")[0].style.display = newriangledisplay[1];
     }
 }
-wpNyarukoTabloidAutoHide();
 
 wpNyarukoTabloid.addEventListener("touchstart",function(e){
     wpNyarukoTouch = e.touches[0];
@@ -95,6 +95,18 @@ function wpNyarukoTabloidTriangleStyle(isr,tid,issty) {
     }
 }
 
+function wpNyarukoTabloidArgGoTo() {
+    var agtstr = window.location.hash.slice(1);
+    var agtnum = parseInt(agtstr);
+    if (!isNaN(agtnum)) {
+        wpNyarukoTabloidGoToPage(agtnum,false);
+    } else {
+        window.location.hash = wpNyarukoTabloidNowpage + 1;
+    }
+}
+
+wpNyarukoTabloidAutoHide();
+wpNyarukoTabloidArgGoTo();
 $(window).resize(function(){
     wpNyarukoTabloidNowpage++;
     wpNyarukoTabloidGoToPage(wpNyarukoTabloidNowpage,false);
