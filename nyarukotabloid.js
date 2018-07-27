@@ -28,7 +28,7 @@ function wpNyarukoTabloidTriangleClick(isnext,isanimate=true) {
         } else {
             wpNyarukoTabloidPaper.css("left",gotowidth);
         }
-        window.location.hash = wpNyarukoTabloidNowpage + 1;
+        // window.location.hash = wpNyarukoTabloidNowpage + 1;
     }
     wpNyarukoTabloidAutoHide();
 }
@@ -64,16 +64,16 @@ wpNyarukoTabloid.addEventListener("touchstart",function(e){
     wpNyarukoTouch = e.touches[0];
 },false);
 wpNyarukoTabloid.addEventListener("touchmove",function(e){
-    if (wpNyarukoTouch != 65536) {
+    if (wpNyarukoTouch != Number.MAX_VALUE) {
         var touch = e.touches[0];
         var touchx = touch.pageX;
         var touchox = wpNyarukoTouch.pageX;
         if (touchox > touchx && (touchox - touchx) > 100) {
             wpNyarukoTabloidTriangleClick(true);
-            wpNyarukoTouch = 65536;
+            wpNyarukoTouch = Number.MAX_VALUE;
         } else if (touchx > touchox && (touchx - touchox) > 100) {
             wpNyarukoTabloidTriangleClick(false);
-            wpNyarukoTouch = 65536;
+            wpNyarukoTouch = Number.MAX_VALUE;
         }
     }
 },false);
@@ -100,9 +100,10 @@ function wpNyarukoTabloidArgGoTo() {
     var agtnum = parseInt(agtstr);
     if (!isNaN(agtnum)) {
         wpNyarukoTabloidGoToPage(agtnum,false);
-    } else {
-        window.location.hash = wpNyarukoTabloidNowpage + 1;
     }
+    // else {
+    //     window.location.hash = wpNyarukoTabloidNowpage + 1;
+    // }
 }
 
 wpNyarukoTabloidAutoHide();
