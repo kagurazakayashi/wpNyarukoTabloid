@@ -17,12 +17,12 @@ define("NYARUKOTABLOID_FULL_DIR", plugin_dir_path( __FILE__ ));
 define("NYARUKOTABLOID_TEXT_DOMAIN", "nyarukotabloid");
 define("NYARUKOTABLOID_ITEMC", "wpNyarukoTabloidItem");
 define("NYARUKOTABLOID_RANDOM_CHAR", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-define("NYARUKOTABLOID_TRIANGLE_MODE", 1); //0外置网页两侧 1嵌入图片两侧
+define("NYARUKOTABLOID_TRIANGLE_MODE", 1); //左右翻页按钮: 0外置网页两侧 1嵌入图片两侧
 function nyarukoTabloidShortcode($attr, $content) {
     $html = '<script>var wpNyarukoNotFormat = true;</script><link href="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.css" rel="stylesheet">';
     $lines = explode("\n", $content);
     $imgpreg = "/<img [^>]*src=\"(.+?)\"/";
-    // $imgpreg = "/!\[.*\]\((.+)\)/";
+    // $imgpreg = "/!\[.*\]\((.+)\)/"; //用于配合 Markdown 语法插件
     $nowimg = "";
     $nowtxt = "";
     $total = count($lines);
