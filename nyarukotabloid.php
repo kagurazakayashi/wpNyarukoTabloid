@@ -17,7 +17,23 @@ define("NYARUKOTABLOID_FULL_DIR", plugin_dir_path( __FILE__ ));
 define("NYARUKOTABLOID_TEXT_DOMAIN", "nyarukotabloid");
 define("NYARUKOTABLOID_ITEMC", "wpNyarukoTabloidItem");
 define("NYARUKOTABLOID_RANDOM_CHAR", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+include_once NYARUKOTABLOID_FULL_DIR."nyarukotabloid-options.php";
 define("NYARUKOTABLOID_TRIANGLE_MODE", 1); //左右翻页按钮: 0外置网页两侧 1嵌入图片两侧
+
+function nyarukoTabloidHead() {
+    $plugindir = plugins_url('',__FILE__);
+    echo '<link href="'.NYARUKOTABLOID_PLUGIN_URL.'/options_style.css" rel="stylesheet">';
+    echo '<script type="text/javascript" src="'.NYARUKOTABLOID_PLUGIN_URL.'/options_script.js"></script>';
+    echo '<style>#wpNyarukoPanelLogo{background-image:url("'.NYARUKOTABLOID_PLUGIN_URL.'/img/wpNyaruko.gif");}#wpNyarukoPanelLogo:hover{background-image:url("'.NYARUKOTABLOID_PLUGIN_URL.'/img/wpNyaruko2.gif");}</style>';
+}
+add_action("admin_head","nyarukoLiveHead");
+
+function nyarukoTabloidAdminlink($links){
+    $links[] = '<a href="'.get_admin_url(null, 'tools.php?page='.NYARUKOTABLOID_TEXT_DOMAIN.'-options').'">图集设置</a>';
+    return $links;
+}
+add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'nyarukoTabloidAdminlink');
+
 function nyarukoTabloidShortcode($attr, $content) {
     $html = '<script>var wpNyarukoNotFormat = true;</script><link href="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.css" rel="stylesheet">';
     $lines = explode("\n", $content);
@@ -69,6 +85,7 @@ function nyarukoTabloidShortcode($attr, $content) {
     <script type="text/javascript" src="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.js" charset="UTF-8"></script>';
     echo $html;
 }
+
 function gTriangleHtml($riangleid=0,$total=PHP_INT_MAX) {
     $triangleHtml = "";
     $showL = false;
@@ -95,6 +112,7 @@ function gTriangleHtml($riangleid=0,$total=PHP_INT_MAX) {
     }
     return $triangleHtml;
 }
+
 function gTxtImgHtml($i,$total,$nowimg,$nowtxt) {
     $imgnav = "";
     // if ($i > 1) {
