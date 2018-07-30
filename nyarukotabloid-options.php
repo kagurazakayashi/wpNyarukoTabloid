@@ -10,6 +10,10 @@ function nyarukotabloidGetOptions() {
         $wpNyarukoTabloidOption['wpNyarukoTabloidPageNumT'] = '20';
         $wpNyarukoTabloidOption['wpNyarukoTabloidPageNumFontSize'] = '12';
         $wpNyarukoTabloidOption['wpNyarukoTabloidPageNumIColor'] = '4800FD';
+        $wpNyarukoTabloidOption['wpNyarukoTabloidMarginT'] = '0';
+        $wpNyarukoTabloidOption['wpNyarukoTabloidMarginB'] = '0';
+        $wpNyarukoTabloidOption['wpNyarukoTabloidMarginL'] = '0';
+        $wpNyarukoTabloidOption['wpNyarukoTabloidMarginR'] = '0';
     }
 	return $wpNyarukoTabloidOption;
 }
@@ -22,7 +26,7 @@ function nyarukotabloidOptionsInit() {
         //保存设置
         if(isset($_POST['nyarukoTabloidOptions'])) {
             $wpNyarukoTabloidOption = nyarukotabloidGetOptions();
-            $wpNyarukoTabloidOptions = ['wpNyarukoTabloidTest','wpNyarukoTabloidPageturnBtn','wpNyarukoTabloidPageNumI','wpNyarukoTabloidPageNumO','wpNyarukoTabloidPageNumT','wpNyarukoTabloidPageNumFontSize','wpNyarukoTabloidPageNumIColor'];
+            $wpNyarukoTabloidOptions = ['wpNyarukoTabloidTest','wpNyarukoTabloidPageturnBtn','wpNyarukoTabloidPageNumI','wpNyarukoTabloidPageNumO','wpNyarukoTabloidPageNumT','wpNyarukoTabloidPageNumFontSize','wpNyarukoTabloidPageNumIColor','wpNyarukoTabloidMarginT','wpNyarukoTabloidMarginB','wpNyarukoTabloidMarginL','wpNyarukoTabloidMarginR'];
             foreach ($wpNyarukoTabloidOptions as $value) {
                 $wpNyarukoTabloidOption[$value] = stripslashes($_POST[$value]);
             }
@@ -78,6 +82,10 @@ function nyarukotabloidOptionsDisplay() {
         <input type="checkbox" checked disabled />使用空格翻到下一页<br/>
         <input type="checkbox" checked disabled />使用回车翻到下一页<br/>
         <input type="checkbox" checked disabled />使用键盘数字键 1-0 直接翻到相应页码（0视为第10页）</td>
+    </tr>
+    <tr>
+        <td>为页面原有元素<br/>留出空间</td>
+        <td>上方留<input name="wpNyarukoTabloidMarginT" type="text" id="wpNyarukoTabloidMarginT" value="<?php echo(@$wpNyarukoTabloidOption['wpNyarukoTabloidMarginT']); ?>" size="3" maxlength="3" />像素，下方留<input name="wpNyarukoTabloidMarginB" type="text" id="wpNyarukoTabloidMarginB" value="<?php echo(@$wpNyarukoTabloidOption['wpNyarukoTabloidMarginB']); ?>" size="3" maxlength="3" />像素；<br/>左边留<input name="wpNyarukoTabloidMarginL" type="text" id="wpNyarukoTabloidMarginL" value="<?php echo(@$wpNyarukoTabloidOption['wpNyarukoTabloidMarginL']); ?>" size="3" maxlength="3" />像素，右边留<input name="wpNyarukoTabloidMarginR" type="text" id="wpNyarukoTabloidMarginR" value="<?php echo(@$wpNyarukoTabloidOption['wpNyarukoTabloidMarginR']); ?>" size="3" maxlength="3" />像素。</td>
     </tr>
     </tbody>
     </table>
