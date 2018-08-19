@@ -35,8 +35,10 @@ function nyarukoTabloidAdminlink($links){
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'nyarukoTabloidAdminlink');
 
 function nyarukoTabloidShortcode($attr, $content) {
-    $html = '<script>var wpNyarukoNotFormat = true;</script><link href="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.css" rel="stylesheet">';
+    $html = '<script>var wpNyarukoNotFormat = true;</script><link href="'.NYARUKOTABLOID_PLUGIN_URL.'nyarukotabloid.css" rel="stylesheet">';
     $lines = explode("\n", $content);
+    // array_unshift($lines, '<img src="TEST"/>', "TEST");
+    // echo "[NOFORMAT]";
     $imgpreg = "/<img [^>]*src=\"(.+?)\"/";
     // $imgpreg = "/!\[.*\]\((.+)\)/"; //用于配合 Markdown 语法插件
     $nowimg = "";
@@ -46,6 +48,7 @@ function nyarukoTabloidShortcode($attr, $content) {
     // $j = 1;
     for($i = 1; $i < $total; $i++){
         $line = $lines[$i];
+        $linecount = strlen($line);
         $img = array();
         $text = "";
         $isimage = false;
@@ -56,7 +59,7 @@ function nyarukoTabloidShortcode($attr, $content) {
         } else {
             $text = strip_tags($line); //取文本
         }
-        if (!empty($text) && $text != "") {
+        if (!empty($text) && $text != "" && $linecount > 1) {
             if ($isimage) {
                 $nowimg = $text;
             } else {
@@ -74,15 +77,16 @@ function nyarukoTabloidShortcode($attr, $content) {
     if (NYARUKOTABLOID_TRIANGLE_MODE == 0) {
         $html .= gTriangleHtml();
     }
-    $html .= '<div class="wpNyarukoTabloidPaper" id="wpNyarukoTabloidPaper" style="width:'.(($total-1) * 100).'%;">';
-    for($j = 1; $j < $total; $j++){
+    $html .= '<div class="wpNyarukoTabloidPaper" id="wpNyarukoTabloidPaper" style="width:'.(($total) * 100).'%;">';
+    for($j = 0; $j < $total; $j++){
         $nowitem = $items[$j];
         $nowimg2 = $nowitem[0];
         $nowtxt2 = $nowitem[1];
-        $html .= gTxtImgHtml($j,$total-1,$nowimg2,$nowtxt2);
+        $note = "\n<!-- ".$j." ".$nowimg2." ".$nowtxt2." -->\n";
+        $html .= $note.gTxtImgHtml($j,$total,$nowimg2,$nowtxt2);
     }
     $html .= '</div></div><script type="text/javascript">var wpNyarukoTabloidTotal = '.$total.';var wpNyarukoTriangleMode = '.NYARUKOTABLOID_TRIANGLE_MODE.';</script>
-    <script type="text/javascript" src="'.NYARUKOTABLOID_PLUGIN_URL.'/nyarukotabloid.js" charset="UTF-8"></script>';
+    <script type="text/javascript" src="'.NYARUKOTABLOID_PLUGIN_URL.'nyarukotabloid.js" charset="UTF-8"></script>';
     echo $html;
 }
 
@@ -94,10 +98,10 @@ function gTriangleHtml($riangleid=0,$total=PHP_INT_MAX) {
         $showL = true;
         $showR = true;
     }
-    if ($riangleid > 1) {
+    if ($riangleid > 0) {
         $showL = true;
     }
-    if ($riangleid < $total) {
+    if ($riangleid < $total-1) {
         $showR = true;
     }
     if ($showL) {
@@ -123,7 +127,7 @@ function gTxtImgHtml($i,$total,$nowimg,$nowtxt) {
     // }
     $itemwidth = 100 / $total;
     $html = [
-    '<div class="'.NYARUKOTABLOID_ITEMC.'" id="'.NYARUKOTABLOID_ITEMC.'-'.$i.'" style="left:calc('.$itemwidth.'% * '.($i-1).');width:'.$itemwidth.'%">',
+    '<div class="'.NYARUKOTABLOID_ITEMC.'" id="'.NYARUKOTABLOID_ITEMC.'-'.$i.'" style="left:calc('.$itemwidth.'% * '.($i).');width:'.$itemwidth.'%">',
         '<div class="'.NYARUKOTABLOID_ITEMC.'ImgBox" id="'.NYARUKOTABLOID_ITEMC.'ImgBox'.$i.'">',
             '<img class="'.NYARUKOTABLOID_ITEMC.'Img" id="'.NYARUKOTABLOID_ITEMC.'Img'.$i.'" src="'.$nowimg.'" alt="'.$nowtxt.'" />',
             $imgnav,
@@ -131,7 +135,7 @@ function gTxtImgHtml($i,$total,$nowimg,$nowtxt) {
         '</div>',
         '<div class="'.NYARUKOTABLOID_ITEMC.'TxtBox" id="'.NYARUKOTABLOID_ITEMC.'TxtBox'.$i.'">',
             '<span class="'.NYARUKOTABLOID_ITEMC.'NumBox" id="'.NYARUKOTABLOID_ITEMC.'NumBox'.$i.'">',
-                '<span class="'.NYARUKOTABLOID_ITEMC.'NumS '.NYARUKOTABLOID_ITEMC.'NumI" id="'.NYARUKOTABLOID_ITEMC.'NumI'.$i.'">'.$i.'</span>',
+                '<span class="'.NYARUKOTABLOID_ITEMC.'NumS '.NYARUKOTABLOID_ITEMC.'NumI" id="'.NYARUKOTABLOID_ITEMC.'NumI'.$i.'">'.($i+1).'</span>',
                 '<span class="'.NYARUKOTABLOID_ITEMC.'NumS '.NYARUKOTABLOID_ITEMC.'NumO" id="'.NYARUKOTABLOID_ITEMC.'NumO'.$i.'"> / </span>',
                 '<span class="'.NYARUKOTABLOID_ITEMC.'NumS '.NYARUKOTABLOID_ITEMC.'NumT" id="'.NYARUKOTABLOID_ITEMC.'NumT'.$i.'">'.$total.'</span>',
             '</span>',

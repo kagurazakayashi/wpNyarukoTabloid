@@ -3,7 +3,7 @@ var wpNyarukoTabloidPaper = $("#wpNyarukoTabloidPaper");
 var wpNyarukoTabloid = $(".wpNyarukoTabloid")[0];
 var wpNyarukoTouch;
 
-for (let i = 1; i < wpNyarukoTabloidTotal; i++) {
+for (let i = 0; i < wpNyarukoTabloidTotal; i++) {
     const nowNyarukoTabloidItemTxtBox = document.getElementById("wpNyarukoTabloidItemTxtBox"+i);
     const nowNyarukoTabloidItemTxt = document.getElementById("wpNyarukoTabloidItemTxt"+i);
     nowNyarukoTabloidItemTxtBox.style.height = (nowNyarukoTabloidItemTxt.offsetHeight) + "px";
@@ -17,7 +17,7 @@ function wpNyarukoTabloidTriangleClick(isnext,isanimate=true) {
     } else {
         newwpNyarukoTabloidNowpage = wpNyarukoTabloidNowpage - 1;
     }
-    if (newwpNyarukoTabloidNowpage >= 0 && newwpNyarukoTabloidNowpage < wpNyarukoTabloidTotal-1) {
+    if (newwpNyarukoTabloidNowpage >= 0 && newwpNyarukoTabloidNowpage < wpNyarukoTabloidTotal) {
         wpNyarukoTabloidNowpage = newwpNyarukoTabloidNowpage;
         var gotowidth = (document.body.clientWidth * wpNyarukoTabloidNowpage * -1)+"px";
         wpNyarukoTabloidPaper.stop();
@@ -71,10 +71,10 @@ document.onmousewheel = function wpNyarukoTabloidMouse(e) {
 function wpNyarukoTabloidAutoHide() {
     if (wpNyarukoTriangleMode == false) {
         var newriangledisplay = ["block","block"];
-        if (wpNyarukoTabloidNowpage <= 0) {
+        if (wpNyarukoTabloidNowpage < 0) {
             newriangledisplay[0] = "none";
         }
-        if (wpNyarukoTabloidNowpage >= wpNyarukoTabloidTotal-2) {
+        if (wpNyarukoTabloidNowpage > wpNyarukoTabloidTotal) {
             newriangledisplay[1] = "none";
         }
         document.getElementsByClassName("wpNyarukoTabloidTriangleBoxLeft")[0].style.display = newriangledisplay[0];
