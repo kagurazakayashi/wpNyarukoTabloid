@@ -53,18 +53,32 @@ document.onkeydown = function wpNyarukoTabloidKey(event) {
         wpNyarukoTabloidGoToPage(keypage);
     }
 }
+var wpNyarukoTabloidMouseWI = 0;
+var wpNyarukoTabloidMouseWO = false;
+var wpNyarukoTabloidMouseWD = null;
 document.onmousewheel = function wpNyarukoTabloidMouse(e) {
-    e = e || window.event;
-    var scroll = 0;
-    if (e.wheelDelta) {//E/O/C
-        scroll = e.wheelDelta;
-    } else if (e.detail) {//FF
-        scroll = e.detail;
-    }
-    if (scroll > 0) {
-        wpNyarukoTabloidTriangleClick(false);
-    } else if (scroll < 0) {
-        wpNyarukoTabloidTriangleClick(true);
+    clearTimeout(wpNyarukoTabloidMouseWD);
+    wpNyarukoTabloidMouseWD = setTimeout(function(){
+        wpNyarukoTabloidMouseWI = 0;
+        wpNyarukoTabloidMouseWO = true;
+    },500);
+    wpNyarukoTabloidMouseWI++;
+    // console.log("wpNyarukoTabloidMouseWI",wpNyarukoTabloidMouseWI);
+    if (wpNyarukoTabloidMouseWO && wpNyarukoTabloidMouseWI > 10) {
+        wpNyarukoTabloidMouseWI = 0;
+        clearTimeout(wpNyarukoTabloidMouseWD);
+        e = e || window.event;
+        var scroll = 0;
+        if (e.wheelDelta) {//E/O/C
+            scroll = e.wheelDelta;
+        } else if (e.detail) {//FF
+            scroll = e.detail;
+        }
+        if (scroll > 0) {
+            wpNyarukoTabloidTriangleClick(false);
+        } else if (scroll < 0) {
+            wpNyarukoTabloidTriangleClick(true);
+        }
     }
 }
 

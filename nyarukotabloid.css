@@ -23,6 +23,25 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    overflow-y: auto;
+    /* scrollbar-track-color: #000; */
+    scrollbar-arrow-color: blue;
+    scrollbar-shadow-color: gray;
+    scrollbar-face-color: blue
+}
+.wpNyarukoTabloidItem::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+}
+.wpNyarukoTabloidItem::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: blue;
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .3) 50%, rgba(255, 255, 255, .3) 75%, transparent 75%, transparent);
+}
+.wpNyarukoTabloidItem::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 5px rgba(0,0,0,0.2); */
+    /*border-radius: 10px;*/
+    background: #000;
 }
 .wpNyarukoTabloidItem img {
     width: 100%;
@@ -127,7 +146,7 @@ body {
     cursor: w-resize;
 }
 .wpNyarukoTabloidItemTxtBox {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: auto;
@@ -136,8 +155,5 @@ body {
 @media screen and (max-width: 480px) {
     .wpNyarukoTabloidItemTxtBox {
         position: initial;
-    }
-    .wpNyarukoTabloid {
-        overflow-y: scroll;
     }
 }
